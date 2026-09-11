@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Eagle — Registration</title>
+  <style>
+    :root {
+      --red: #c8102e;
+      --red-dark: #9c0d24;
+      --ink: #1f2426;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --bg: #f4f5f7;
+      --card: #ffffff;
+      --ok: #15803d;
+      --err: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .head {
+      background: #000;
+      padding: 28px 24px 24px;
+      text-align: center;
+    }
+    .head img { max-width: 240px; width: 80%; height: auto; }
+    .body { padding: 28px 24px 8px; }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 4px;
+      text-align: center;
+    }
+    .sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 24px;
+    }
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    label .req { color: var(--red); }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+      background: #fff;
+      color: var(--ink);
+    }
+    input:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(200,16,46,0.12);
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--red);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background .15s, opacity .15s;
+    }
+    button:hover:not(:disabled) { background: var(--red-dark); }
+    button:disabled { opacity: .6; cursor: not-allowed; }
+    .msg {
+      text-align: center;
+      font-size: 14px;
+      margin: 16px 0 0;
+      min-height: 20px;
+      font-weight: 600;
+    }
+    .msg.ok { color: var(--ok); }
+    .msg.err { color: var(--err); }
+    .foot {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 16px 24px 22px;
+    }
+    .foot span { color: var(--red); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <img src="logo.png" alt="Social Eagle" />
+    </div>
+    <div class="body">
+      <h1>Registration Form</h1>
+      <p class="sub">Fill in your details below to register.</p>
+
+      <form id="regForm" autocomplete="on">
+        <div class="field">
+          <label for="name">Name <span class="req">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Your full name" required />
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone Number <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210"
+                 pattern="[0-9+\-\s()]{7,20}" required />
+        </div>
+        <div class="field">
+          <label for="location">Location <span class="req">*</span></label>
+          <input type="text" id="location" name="location" placeholder="City, State" required />
+        </div>
+        <button type="submit" id="submitBtn">Submit</button>
+        <p class="msg" id="msg"></p>
+      </form>
+    </div>
+    <div class="foot">together we rise &nbsp;·&nbsp; <span>Social Eagle</span></div>
+  </div>
+
+  <script>
+    // ⬇️ PASTE your Google Apps Script Web App URL here (see SETUP.md)
+    const SCRIPT_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+
+    const form = document.getElementById("regForm");
+    const btn = document.getElementById("submitBtn");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      msg.className = "msg";
+      msg.textContent = "";
+
+      if (!SCRIPT_URL || SCRIPT_URL.includes("PASTE_YOUR_WEB_APP_URL")) {
+        msg.className = "msg err";
+        msg.textContent = "Setup needed: add your Web App URL in index.html.";
+        return;
+      }
+
+      const data = new URLSearchParams();
+      data.append("name", document.getElementById("name").value.trim());
+      data.append("email", document.getElementById("email").value.trim());
+      data.append("phone", document.getElementById("phone").value.trim());
+      data.append("location", document.getElementById("location").value.trim());
+
+      btn.disabled = true;
+      btn.textContent = "Submitting…";
+
+      try {
+        // Apps Script web apps don't send CORS headers, so we use no-cors.
+        // The write still succeeds; we just can't read the response body.
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: data.toString(),
+        });
+
+        msg.className = "msg ok";
+        msg.textContent = "✓ Thank you! Your details have been submitted.";
+        form.reset();
+      } catch (err) {
+        msg.className = "msg err";
+        msg.textContent = "Something went wrong. Please try again.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Submit";
+      }
+    });
+  </script>
+</body>
+</html>
