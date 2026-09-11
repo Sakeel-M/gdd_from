@@ -1,12 +1,14 @@
 # Social Eagle — Registration Form
 
 A branded form (Name, Email, Phone, Location) that saves each submission to a
-Google Sheet via a Google Apps Script Web App.
+Google Sheet **and** emails the submitter the framework PDF — all via a Google
+Apps Script Web App.
 
 ## Files
 - `index.html` — the form (open in any browser / host anywhere static).
-- `Code.gs` — the Apps Script backend that writes rows to the sheet.
+- `Code.gs` — the Apps Script backend: writes the row + sends the email.
 - `logo.png` — Social Eagle logo used in the form header.
+- `Thedal_x_Social_Eagle_Framework.pdf` — the PDF emailed to each registrant.
 
 ## One-time setup (connect the form to your sheet)
 
@@ -29,9 +31,27 @@ Google Sheet via a Google Apps Script Web App.
    ```
 
 5. Open `index.html` in a browser and submit a test entry. A new row should
-   appear in the sheet with: Timestamp, Name, Email, Phone, Location.
+   appear in the sheet (Timestamp, Name, Email, Phone, Location), and the email
+   you entered should receive the framework PDF.
+
+## The emailed PDF — choose the attachment source (in `Code.gs`)
+`Code.gs` needs to know where to load the PDF from. Two options:
+
+- **Option A — Google Drive (recommended, most reliable):**
+  Upload `Thedal_x_Social_Eagle_Framework.pdf` to your Google Drive, open it,
+  and copy the id from the URL (`.../file/d/THIS_PART/view`). Paste it into
+  `PDF_FILE_ID` in `Code.gs`.
+- **Option B — GitHub (zero setup, but repo must stay public):**
+  Leave `PDF_FILE_ID` empty. `Code.gs` already points `PDF_URL` at the PDF in
+  this repo, so it fetches it automatically. If you make the repo private, this
+  stops working — switch to Option A.
+
+The first time you submit, Apps Script will ask you to authorize sending email
+(and Drive access if you use Option A). Approve it once.
 
 ## Notes
+- Email sending has a daily quota: ~100 recipients/day on a personal Gmail
+  account, ~1,500/day on Google Workspace.
 - If your sheet tab isn't named `Sheet1`, update `SHEET_NAME` in `Code.gs`
   (or it falls back to the first tab automatically).
 - The browser can't read the response from Apps Script (Google sends no CORS
