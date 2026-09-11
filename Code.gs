@@ -79,9 +79,8 @@ function sendFrameworkEmail_(to, name) {
 
   var plain =
     'Hi ' + name + ',\n\n' +
-    'Thank you for attending ' + SPEAKER + '’s session! We’re thrilled ' +
-    'to have had you with us.\n\n' +
-    'Your copy of the Thedal x Social Eagle Framework is attached to this email.\n\n' +
+    'Thanks for showing your interest!\n\n' +
+    'Please find the attached PDF below.\n\n' +
     'Together we rise.\n— Team Social Eagle';
 
   var options = { name: FROM_NAME, htmlBody: html };
@@ -125,9 +124,9 @@ logoBlock,
 
 '<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#3a4145;">Hi <strong>' + safeName + '</strong>,</p>',
 
-'<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#3a4145;">We’re so glad you joined us. It was a pleasure having you in the session with <strong>' + escapeHtml_(SPEAKER) + '</strong>. We hope you walked away inspired and ready to rise. 🚀</p>',
+'<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#3a4145;">Thanks for showing your interest! We’re glad to have you with us. 🙌</p>',
 
-'<p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3a4145;">As promised, your copy of the <strong>Thedal &times; Social Eagle Framework</strong> is attached to this email — keep it handy as you put what you learned into action.</p>',
+'<p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3a4145;">Please find the attached PDF below.</p>',
 
 // Attachment callout
 '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fdf2f4;border:1px solid #f4c9d1;border-radius:12px;margin:0 0 28px;">',
