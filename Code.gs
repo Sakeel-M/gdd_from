@@ -29,9 +29,8 @@ var PDF_NAME = 'Thedal x Social Eagle Framework.pdf';
 var LOGO_FILE_ID = '';
 var LOGO_URL = 'https://raw.githubusercontent.com/Sakeel-M/gdd_from/main/logo.png';
 
-var EMAIL_SUBJECT = 'Thank You for Attending GD Dharaneetharan’s Session 🦅';
+var EMAIL_SUBJECT = 'Your Requested Social Eagle PDF';
 var FROM_NAME = 'Social Eagle';
-var SPEAKER = 'GD Dharaneetharan';
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -79,9 +78,9 @@ function sendFrameworkEmail_(to, name) {
 
   var plain =
     'Hi ' + name + ',\n\n' +
-    'Thanks for showing your interest!\n\n' +
-    'Please find the attached PDF below.\n\n' +
-    'Together we rise.\n— Team Social Eagle';
+    'Thanks for filling out the form.\n\n' +
+    'Your requested Social Eagle PDF is attached here.\n\n' +
+    'Together we rise,\nTeam Social Eagle.';
 
   var options = { name: FROM_NAME, htmlBody: html };
   if (pdf) options.attachments = [pdf];
@@ -117,26 +116,16 @@ logoBlock,
 '<tr><td style="height:5px;background:#c8102e;line-height:5px;font-size:0;">&nbsp;</td></tr>',
 
 // Body
-'<tr><td style="padding:38px 36px 8px;font-family:Arial,Helvetica,sans-serif;color:#1f2426;">',
+'<tr><td style="padding:40px 36px 34px;font-family:Arial,Helvetica,sans-serif;color:#1f2426;">',
 
-'<p style="margin:0 0 6px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#c8102e;font-weight:700;">Thank You</p>',
-'<h1 style="margin:0 0 18px;font-size:26px;line-height:1.25;color:#1f2426;">Thanks for attending<br>' + escapeHtml_(SPEAKER) + '’s session!</h1>',
+'<p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#3a4145;">Hi <strong>' + safeName + '</strong>,</p>',
 
-'<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#3a4145;">Hi <strong>' + safeName + '</strong>,</p>',
+'<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#3a4145;">Thanks for filling out the form.</p>',
 
-'<p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#3a4145;">Thanks for showing your interest! We’re glad to have you with us. 🙌</p>',
+'<p style="margin:0 0 26px;font-size:16px;line-height:1.6;color:#3a4145;">Your requested <strong>Social Eagle PDF</strong> is attached here.</p>',
 
-'<p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#3a4145;">Please find the attached PDF below.</p>',
-
-// Attachment callout
-'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fdf2f4;border:1px solid #f4c9d1;border-radius:12px;margin:0 0 28px;">',
-'<tr><td style="padding:16px 18px;font-family:Arial,sans-serif;">',
-'<span style="font-size:15px;color:#9c0d24;font-weight:700;">📎 Attached:</span> ',
-'<span style="font-size:15px;color:#3a4145;">Thedal &times; Social Eagle Framework (PDF)</span>',
-'</td></tr></table>',
-
-'<p style="margin:0 0 4px;font-size:16px;line-height:1.6;color:#3a4145;">Together we rise,</p>',
-'<p style="margin:0 0 30px;font-size:16px;line-height:1.6;color:#1f2426;font-weight:700;">Team Social Eagle</p>',
+'<p style="margin:0 0 2px;font-size:16px;line-height:1.6;color:#3a4145;">Together we rise,</p>',
+'<p style="margin:0;font-size:16px;line-height:1.6;color:#1f2426;font-weight:700;">Team Social Eagle.</p>',
 
 '</td></tr>',
 
